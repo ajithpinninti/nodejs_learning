@@ -1,0 +1,43 @@
+const { isUtf8 } = require("buffer");
+const { log } = require("console");
+const { readFile, writeFile } = require("fs").promises;
+const { first } = require("lodash");
+const util = require("util");
+
+const readFilePromise = util.promisify(readFile);
+const writeFilePromise = util.promisify(writeFile);
+
+// const { first } = require("lodash");
+
+const start = async () => {
+  try {
+    const first_file = await readFile("content/test.txt", "utf-8");
+    const second_file = await readFile("content/test2.txt", "utf-8");
+    await writeFile(
+      "./content/result.txt",
+      `Here is the Data : ${first_file}, ${second_file}`
+    );
+    const result = await readFile("content/result.txt", "utf-8");
+    console.log(first_file);
+    console.log(second_file);
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
+
+// getText("content/test.txt").then((result) => console.log(result));
+
+// const getText = (path) => {
+//   return new Promise((resolve, reject) => {
+//     readFile(path, "utf-8", (err, result) => {
+//       if (err) {
+//         reject(err);
+//         return;
+//       }
+//       resolve(result);
+//     });
+//   });
+// };
